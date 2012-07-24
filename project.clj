@@ -1,4 +1,4 @@
-(defproject belletristik "0.0.1-SNAPSHOT"
+(defproject xombie "0.0.1-SNAPSHOT"
   :description "Teaching Clojure to love the XOM"
   :url "http://github.com/bpsm/xombie"
   :dependencies [[org.clojure/clojure "1.4.0"]
