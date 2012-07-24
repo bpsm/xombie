@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://www.idpf.org/2007/opf" 
+         version="2.0" 
+         unique-identifier="BookId">
+	
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" 
+            xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title>BOOK_TITLE</dc:title>
+    <dc:language>de-AT</dc:language>
+    <meta name="cover" content="cover-image" />
+    <dc:identifier id="BookId">BOOK_UUID</dc:identifier>  
+    <dc:creator opf:role="aut">AUTHOR_NAME_LN_FN</dc:creator>
+    <dc:publisher>PUBLISHER_NAME_LN_FN</dc:publisher>
+    <dc:subject>FICTION / Fantasy / General</dc:subject>
+    <dc:date>2009</dc:date>
+    <dc:description></dc:description>
+  </metadata>
+
+  <manifest>
+    <item id="frontmatter" media-type="application/xhtml+xml" href="frontmatter.xhtml" />
+    <item id="contents" media-type="application/xhtml+xml" href="contents.xhtml" />
+    <item id="ch01" media-type="application/xhtml+xml" href="ch01.xhtml" />
+    <item id="ch02" media-type="application/xhtml+xml" href="ch02.xhtml" />
+    <item id="ch03" media-type="application/xhtml+xml" href="ch03.xhtml" />
+    <item id="ch04" media-type="application/xhtml+xml" href="ch04.xhtml" />
+    <item id="ch05" media-type="application/xhtml+xml" href="ch05.xhtml" />
+    <item id="ch06" media-type="application/xhtml+xml" href="ch06.xhtml" />
+    <item id="ch07" media-type="application/xhtml+xml" href="ch07.xhtml" />
+    <item id="ch08" media-type="application/xhtml+xml" href="ch08.xhtml" />
+    <item id="ch09" media-type="application/xhtml+xml" href="ch09.xhtml" />
+    <item id="ch10" media-type="application/xhtml+xml" href="ch10.xhtml" />
+    <item id="ch11" media-type="application/xhtml+xml" href="ch11.xhtml" />
+    <item id="ch12" media-type="application/xhtml+xml" href="ch12.xhtml" />
+    <item id="ch13" media-type="application/xhtml+xml" href="ch13.xhtml" />
+    <item id="ch14" media-type="application/xhtml+xml" href="ch14.xhtml" />
+    <item id="ch15" media-type="application/xhtml+xml" href="ch15.xhtml" />
+    <item id="ch16" media-type="application/xhtml+xml" href="ch16.xhtml" />
+    <item id="ch17" media-type="application/xhtml+xml" href="ch17.xhtml" />
+    <item id="ch18" media-type="application/xhtml+xml" href="ch18.xhtml" />
+    <item id="ch19" media-type="application/xhtml+xml" href="ch19.xhtml" />
+    <item id="ch20" media-type="application/xhtml+xml" href="ch20.xhtml" />
+    <item id="ch21" media-type="application/xhtml+xml" href="ch21.xhtml" />
+    <item id="ch22" media-type="application/xhtml+xml" href="ch22.xhtml" />
+    <item id="ch23" media-type="application/xhtml+xml" href="ch23.xhtml" />
+    <item id="ch24" media-type="application/xhtml+xml" href="ch24.xhtml" />
+    <item id="ch25" media-type="application/xhtml+xml" href="ch25.xhtml" />
+    <item id="ch26" media-type="application/xhtml+xml" href="ch26.xhtml" />
+    <item id="ch27" media-type="application/xhtml+xml" href="ch27.xhtml" />
+    <item id="ch28" media-type="application/xhtml+xml" href="ch28.xhtml" />
+    <item id="ch29" media-type="application/xhtml+xml" href="ch29.xhtml" />
+    <item id="css" media-type="text/css" href="book.css" />
+    <item id="ncx" media-type="application/x-dtbncx+xml" href="book.ncx" />
+    <item id="cover-image" media-type="image/png" href="cover.png" />
+  </manifest>
+
+  <spine toc="ncx">
+    <itemref idref="frontmatter" />
+    <itemref idref="contents" />
+    <itemref idref="ch01" />
+    <itemref idref="ch02" />
+    <itemref idref="ch03" />
+    <itemref idref="ch04" />
+    <itemref idref="ch05" />
+    <itemref idref="ch06" />
+    <itemref idref="ch07" />
+    <itemref idref="ch08" />
+    <itemref idref="ch09" />
+    <itemref idref="ch10" />
+    <itemref idref="ch11" />
+    <itemref idref="ch12" />
+    <itemref idref="ch13" />
+    <itemref idref="ch14" />
+    <itemref idref="ch15" />
+    <itemref idref="ch16" />
+    <itemref idref="ch17" />
+    <itemref idref="ch18" />
+    <itemref idref="ch19" />
+    <itemref idref="ch20" />
+    <itemref idref="ch21" />
+    <itemref idref="ch22" />
+    <itemref idref="ch23" />
+    <itemref idref="ch24" />
+    <itemref idref="ch25" />
+    <itemref idref="ch26" />
+    <itemref idref="ch27" />
+    <itemref idref="ch28" />
+    <itemref idref="ch29" />
+  </spine>
+
+  <guide>
+    <reference type="toc" title="Inhalt" href="contents.xhtml"></reference>
+    <reference type="text" title="I" href="ch01.xhtml"></reference>
+  </guide>
+
+</package>
