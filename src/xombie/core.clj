@@ -261,9 +261,10 @@ place to do all the type hinting."
 (defn namespace-prefix-at
   ([^Element el index]
      (.getNamespacePrefix el index)))
-(defn namespace-uri-at
-  ([^Element el index]
-     (.getNamespaceURI el index)))
+(defn namespace-uri-for-prefix
+  ([^Element el prefix]
+     (.getNamespaceURI el prefix)))
+
 (defn remove-attribute! [^Element el ^Attribute a]
   (.removeAttribute el a))
 (defn remove-children! [^Element el]
