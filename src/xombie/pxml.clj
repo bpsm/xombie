@@ -17,7 +17,12 @@ persistent data structures."
 
 (defmethod xom->pxml Document
   [node]
-  (xom->pxml (xom/root-element node)))
+  (vary-meta (xom->pxml (xom/root-element node))
+             assoc :doc-type
+             {:public-id (xom/public-id node)
+              :system-id (xom/system-id node)
+              :root-element-name (xom/root-element-name node)
+              :internal-dtd-subset (xom/internal-dtd-subset node)}))
 
 (defmethod xom->pxml Comment
   [node]
