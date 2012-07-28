@@ -23,6 +23,9 @@ persistent data structures."
   [node]
   {:comment (xom/value node)})
 
+(defmethod xom->pxml ProcessingInstruction
+  [node]
+  {:processing-instruction (xom/value node)})
 
 (defn make-element-content-seq [el]
   (map xom->pxml (xom/xom-seq el)))
