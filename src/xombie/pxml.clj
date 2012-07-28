@@ -40,8 +40,8 @@ persistent data structures."
                  name
                  (with-meta
                    [name nsuri]
-                   {::ns ns-map
-                    ::prefix (xom/namespace-prefix a)}))
+                   {:ns ns-map
+                    :prefix (xom/namespace-prefix a)}))
                (xom/value a)}))))
 
 (defn make-element-tag [el]
@@ -54,8 +54,8 @@ persistent data structures."
     (into {} (map #(do {%1 %2}) ps us))))
 
 (defn make-element-meta-map [el ns-map]
-  {::ns ns-map
-   ::prefix (xom/namespace-prefix el)})
+  {:ns ns-map
+   :prefix (xom/namespace-prefix el)})
 
 (defn make-element-map [el ns-map]
   {:tag (make-element-tag el)
