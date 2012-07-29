@@ -9,7 +9,9 @@ place to do all the type hinting."
             Nodes ParentNode ProcessingInstruction Serializer
             Text XPathContext]
            [org.xml.sax XMLReader]
-           [java.io File InputStream OutputStream Reader]))
+           [java.io File InputStream OutputStream Reader StringReader
+            ByteArrayOutputStream StringWriter]
+           [clojure.lang IPersistentMap]))
 
 ;;; ------------------------------------------------------------------------
 ;;; Protocols
@@ -459,6 +461,63 @@ place to do all the type hinting."
   (doto ser (.write doc)))
 
 
+
+;;; ------------------------------------------------------------------------
+;;; Conveniences for I/O
+;;; ------------------------------------------------------------------------
 
+(defn serialize
+  [doc out & {:keys [encoding
+                     indent
+                     line-separator
+                     max-line-length
+                     preserve-base-uri
+                     normalize-unicode]
+              :or {encoding          "UTF-8"
+                   indent            2
+                   line-separator    "\n"
+                   max-line-length   78
+                   preserve-base-uri false
+                   normalize-unicode false}}]
+  (with-open [out (io/output-stream out)]
+    (let [ser (if encoding
+                (new-serializer out encoding)
+                (new-serializer out))]
+      (when indent (set-indent! ser indent))
+      (when line-separator (set-line-separator! ser line-separator))
+      (when max-line-length (set-max-length! ser max-line-length))
+      (set-preserve-base-uri! ser (boolean preserve-base-uri))
+      (set-unicode-normalization-form-c! ser (boolean normalize-unicode))
+      (write ser doc)
+      (flush-serializer ser))))
+
+(defn serialize->string
+  [doc & opts]
+  (let [{:keys [encoding] :or {encoding "UTF-8"}} opts
+        bos (ByteArrayOutputStream.)
+        sw (StringWriter.)]
+    (apply serialize doc bos opts)
+    (io/copy (.toByteArray bos) sw :encoding encoding)
+    (.toString sw)))
+
+(defn ^:private xml-buildable [xml]
+  (cond (and (string? xml) (re-find #"^\<" xml))  (StringReader. xml)
+        (instance? Reader xml)                    xml
+        :else                                     (io/input-stream xml)))
+
+(defn ^:private make-builder [node-factory validate xml-reader]
+  (let [node-factory (or node-factory (new-node-factory))
+        validate     (boolean validate)]
+    (if xml-reader
+      (new-builder xml-reader validate node-factory)
+      (new-builder validate node-factory))))
+
+(defn parse
+  [xml & {:keys [base-uri xml-reader node-factory validate builder]}]
+  (let [builder (or builder (make-builder node-factory validate xml-reader))]
+    (with-open [in (xml-buildable xml)]
+      (if base-uri
+        (build builder in base-uri)
+        (build builder in)))))
 
 
