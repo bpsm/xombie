@@ -15,14 +15,17 @@ persistent data structures."
   [node]
   (xom/value node))
 
+
+(defn make-doc-type-map [doc]
+  {:public-id (xom/public-id doc)
+   :system-id (xom/system-id doc)
+   :root-element-name (xom/root-element-name doc)
+   :internal-dtd-subset (xom/internal-dtd-subset doc)})
+
 (defmethod xom->pxml Document
-  [node]
-  (vary-meta (xom->pxml (xom/root-element node))
-             assoc :doc-type
-             {:public-id (xom/public-id node)
-              :system-id (xom/system-id node)
-              :root-element-name (xom/root-element-name node)
-              :internal-dtd-subset (xom/internal-dtd-subset node)}))
+  [doc]
+  (vary-meta (xom->pxml (xom/root-element doc))
+             assoc :doc-type (make-doc-type-map doc)))
 
 (defmethod xom->pxml Comment
   [node]
