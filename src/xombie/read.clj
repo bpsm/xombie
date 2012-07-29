@@ -5,14 +5,9 @@
   (:import [java.io Reader StringReader]))
 
 (defn ^:private xml-buildable [xml]
-  (cond (and (string? xml) (re-find #"^\<" xml))
-        , (StringReader. xml)
-
-        (instance? Reader xml)
-        , xml
-
-        :else
-        , (io/input-stream xml)))
+  (cond (and (string? xml) (re-find #"^\<" xml))  (StringReader. xml)
+        (instance? Reader xml)                    xml
+        :else                                     (io/input-stream xml)))
 
 (defn ^:private make-builder [node-factory validate xml-reader]
   (let [node-factory (or node-factory (xom/new-node-factory))
