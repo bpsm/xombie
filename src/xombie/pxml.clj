@@ -78,4 +78,51 @@ persistent data structures."
       (make-element-map el ns-map)
       (make-element-meta-map el ns-map))))
 
+(defn pxml-kind [x]
+  (cond (string? x)                           :text
+        (contains? (meta x) :doc-type)        :document
+        (contains? x :tag)                    :element
+        (contains? x :comment)                :comment
+        (contains? x :processing-instruction) :processing-instruction))
+
+(defmulti pxml->xom pxml-kind)
+
+(defmethod pxml->xom :text
+  [x]
+  (xom/new-text x))
+
+(defmethod pxml->xom :comment
+  [x]
+  (xom/new-comment (:comment x)))
+
+(defmethod pxml->xom :processing-instruction
+  [x]
+  (xom/new-processing-instruction (:processing-instruction x)))
+
+(defn pxml-doc-type->xom [x]
+  (doto (xom/new-doc-type (:root-element-name x)
+                          (:system-id x)
+                          (:public-id x))
+    (xom/set-internal-dtd-subset! (:internal-dtd-subset x))))
+
+(defmethod pxml->xom :document
+  [x]
+  (doto (xom/new-document (pxml->xom (vary-meta x dissoc :doc-type)))
+    (xom/set-doc-type! (-> x meta :doc-type pxml-doc-type->xom))))
+
+(defmethod pxml->xom :element
+  [x]
+  (let [{:keys [tag uri attrs content]} x
+        el (xom/new-element (name tag) uri)]
+    (doseq [[k v] attrs]
+      (let [attr (if (keyword? k)
+                   (xom/new-attribute (name k) v)
+                   (let [[local-name uri] k
+                         {ns-map :ns, prefix :prefix} (meta k)
+                         qname (str prefix ":" (name local-name))]
+                     (xom/new-attribute qname uri v)))]
+        (xom/add-attribute! el attr)))
+    (doseq [child content]
+      (xom/append-child! el (pxml->xom child)))
+    el))
 
