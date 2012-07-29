@@ -44,7 +44,7 @@ persistent data structures."
     (into {}
             (for [a as :let [nsuri (xom/namespace-uri a)
                              name (keyword (xom/local-name a))]]
-              {(if (empty nsuri)
+              {(if (empty? nsuri)
                  name
                  (with-meta
                    [name nsuri]
